@@ -7,7 +7,7 @@ export class CustomEditor extends Editor {
 	public onEscape?: () => void;
 	public onCtrlC?: () => void;
 	public onCtrlP?: () => void;
-	public onCtrlT?: () => void;
+	public onShiftTab?: () => void;
 
 	handleInput(data: string): void {
 		// Intercept Ctrl+P for model cycling
@@ -16,9 +16,9 @@ export class CustomEditor extends Editor {
 			return;
 		}
 
-		// Intercept Ctrl+T for thinking level cycling
-		if (data === "\x14" && this.onCtrlT) {
-			this.onCtrlT();
+		// Intercept Shift+Tab for thinking level cycling
+		if (data === "\x1b[Z" && this.onShiftTab) {
+			this.onShiftTab();
 			return;
 		}
 
