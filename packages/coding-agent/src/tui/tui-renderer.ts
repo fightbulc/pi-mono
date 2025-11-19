@@ -139,6 +139,11 @@ export class TuiRenderer {
 			description: "Logout from OAuth provider",
 		};
 
+		const clearCommand: SlashCommand = {
+			name: "clear",
+			description: "Clear conversation and start fresh",
+		};
+
 		// Setup autocomplete for file paths and slash commands
 		const autocompleteProvider = new CombinedAutocompleteProvider(
 			[
@@ -150,6 +155,7 @@ export class TuiRenderer {
 				branchCommand,
 				loginCommand,
 				logoutCommand,
+				clearCommand,
 			],
 			process.cwd(),
 		);
@@ -288,6 +294,13 @@ export class TuiRenderer {
 			// Check for /logout command
 			if (text === "/logout") {
 				this.showOAuthSelector("logout");
+				this.editor.setText("");
+				return;
+			}
+
+			// Check for /clear command
+			if (text === "/clear") {
+				this.handleClearCommand();
 				this.editor.setText("");
 				return;
 			}
@@ -1032,6 +1045,40 @@ export class TuiRenderer {
 			);
 			this.ui.requestRender();
 		}
+	}
+
+	private handleClearCommand(): void {
+		// Clear agent messages
+		this.agent.clearMessages();
+
+		// Clear chat UI
+		this.chatContainer.clear();
+
+		// Reset first message flag
+		this.isFirstUserMessage = true;
+
+		// Clear any pending tools
+		this.pendingTools.clear();
+		this.streamingComponent = null;
+
+		// Clear loading animation if any
+		if (this.loadingAnimation) {
+			this.loadingAnimation.stop();
+			this.loadingAnimation = null;
+		}
+		this.statusContainer.clear();
+
+		// Create a new session file for the fresh start
+		// The session will be properly initialized after the first user+assistant message exchange
+		this.sessionManager.createNewSession();
+
+		// Show confirmation
+		const confirmText = chalk.dim("Context cleared. Starting fresh session.");
+		this.chatContainer.addChild(new Spacer(1));
+		this.chatContainer.addChild(new Text(confirmText, 1, 0));
+		this.chatContainer.addChild(new Spacer(1));
+
+		this.ui.requestRender();
 	}
 
 	private handleSessionCommand(): void {

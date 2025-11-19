@@ -301,6 +301,22 @@ Logout from OAuth providers:
 
 Shows a list of logged-in providers to logout from.
 
+### /clear
+
+Clear the current conversation and start fresh:
+
+```
+/clear
+```
+
+This command:
+- Clears all messages from the current conversation
+- Resets the context window
+- Starts a new session file
+- Keeps the same model and settings
+
+Useful when you want to start a new task without accumulating context from previous work.
+
 ## Editor Features
 
 The interactive input editor includes several productivity features:

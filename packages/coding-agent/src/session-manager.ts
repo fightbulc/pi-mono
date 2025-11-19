@@ -78,6 +78,18 @@ export class SessionManager {
 		this.enabled = false;
 	}
 
+	/** Create a new session (for /clear command) */
+	createNewSession() {
+		if (!this.enabled) return;
+
+		// Reset session state
+		this.sessionInitialized = false;
+		this.pendingMessages = [];
+
+		// Generate new session file
+		this.initNewSession();
+	}
+
 	private getSessionDirectory(): string {
 		const cwd = process.cwd();
 		// Replace all path separators and colons (for Windows drive letters) with dashes
