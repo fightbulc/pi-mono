@@ -2068,13 +2068,13 @@ export const MODELS = {
 			reasoning: true,
 			input: ["text"],
 			cost: {
-				input: 0.5,
-				output: 2.5,
+				input: 0.44999999999999996,
+				output: 2.35,
 				cacheRead: 0,
 				cacheWrite: 0,
 			},
 			contextWindow: 262144,
-			maxTokens: 262144,
+			maxTokens: 16384,
 		} satisfies Model<"openai-completions">,
 		"amazon/nova-premier-v1": {
 			id: "amazon/nova-premier-v1",
