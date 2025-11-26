@@ -1,10 +1,10 @@
 {
-	"name": "@mariozechner/pi-coding-agent",
+	"name": "@mariozechner/pi-mom",
 	"version": "0.9.4",
-	"description": "Coding agent CLI with read, bash, edit, write tools and session management",
+	"description": "Slack bot that delegates messages to the pi coding agent",
 	"type": "module",
 	"bin": {
-		"pi": "dist/cli.js"
+		"mom": "dist/main.js"
 	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -14,33 +14,29 @@
 	],
 	"scripts": {
 		"clean": "rm -rf dist",
-		"build": "tsgo -p tsconfig.build.json && chmod +x dist/cli.js && npm run copy-theme-assets",
-		"copy-theme-assets": "cp src/theme/*.json dist/theme/",
+		"build": "tsgo -p tsconfig.build.json && chmod +x dist/main.js",
 		"dev": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput",
 		"check": "tsgo --noEmit",
-		"test": "vitest --run",
 		"prepublishOnly": "npm run clean && npm run build"
 	},
 	"dependencies": {
+		"@anthropic-ai/sandbox-runtime": "^0.0.16",
 		"@mariozechner/pi-agent-core": "^0.9.4",
 		"@mariozechner/pi-ai": "^0.9.4",
-		"@mariozechner/pi-tui": "^0.9.4",
-		"chalk": "^5.5.0",
-		"diff": "^8.0.2",
-		"glob": "^11.0.3"
+		"@sinclair/typebox": "^0.34.0",
+		"@slack/socket-mode": "^2.0.0",
+		"@slack/web-api": "^7.0.0",
+		"diff": "^8.0.2"
 	},
 	"devDependencies": {
 		"@types/diff": "^7.0.2",
 		"@types/node": "^24.3.0",
-		"typescript": "^5.7.3",
-		"vitest": "^3.2.4"
+		"typescript": "^5.7.3"
 	},
 	"keywords": [
-		"coding-agent",
+		"slack",
+		"bot",
 		"ai",
-		"llm",
-		"cli",
-		"tui",
 		"agent"
 	],
 	"author": "Mario Zechner",
@@ -48,7 +44,7 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/badlogic/pi-mono.git",
-		"directory": "packages/coding-agent"
+		"directory": "packages/mom"
 	},
 	"engines": {
 		"node": ">=20.0.0"
